@@ -22,12 +22,16 @@ namespace SemesterProjekt
     {
         private Random _random;
         private int _targetCount;
+        private int _hitCount;
         public Standard()
         {
             InitializeComponent();
             _random = new Random();
             _targetCount = 0;
             StartSpawningTargets();
+
+            this.Cursor = new Cursor(@"C:\Users\Cami\Downloads\Crosshair.cur");
+
         }
      
         private void StartSpawningTargets()
@@ -49,7 +53,7 @@ namespace SemesterProjekt
             {
                 Width = 50,
                 Height = 50,
-                Fill = Brushes.Red,
+                Fill = Brushes.BlueViolet,
                 Stroke = Brushes.Black,
                 StrokeThickness = 1
             };
@@ -67,18 +71,24 @@ namespace SemesterProjekt
             {
                 canvas.Children.RemoveAt(0);
                 _targetCount--;
+                
             }
             _targetCount++;
+            
+            tbl_hits.Text = _hitCount.ToString();
 
         }
         private void Target_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var target = sender as UIElement;
+           var target = sender as UIElement;
             if (target != null)
             {
                 {
                     canvas.Children.Remove(target);
                     _targetCount--;
+                    //tells the hits
+                    _hitCount++;
+
                 }
 
             }

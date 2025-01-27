@@ -6,7 +6,38 @@
         xmlns:local="clr-namespace:SemesterProjekt"
         mc:Ignorable="d"
         Title="Standard" Height="450" Width="800" Background="#FF737070" >
+     <Grid ShowGridLines="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Canvas Name ="canvas" Grid.Row="1"></Canvas>
+        <Grid x:Name="menubar">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Name="tbl_hits" Grid.Column="1" TextWrapping="Wrap" Text="Hits:" Foreground="#FFD62323"/>
+        </Grid>
 
-    <Canvas Name ="canvas"> </Canvas>
+    </Grid>
 
 </Window>
