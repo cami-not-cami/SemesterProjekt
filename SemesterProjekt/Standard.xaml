@@ -11,7 +11,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Canvas Name ="canvas" Grid.Row="1"></Canvas>
+        <Canvas Name ="canvas" Grid.Row="1" Background="#FFCCB5B5" ></Canvas>
         <Grid x:Name="menubar">
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -36,13 +36,14 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBlock Name="tbl_hits" Grid.Column="1" TextWrapping="Wrap" Foreground="#FFD62323" Padding="0,5,0,0"/>
-            <TextBox Name="tbl_misses" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0,5,0,0"/>
             <Label Content="Hits:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <Label Content="Miss:" Grid.Row="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
             <Label Grid.Column="2" Content="Timer:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <Label x:Name="lbl_timer" Grid.Column="3" Content=""/>
             <Label Grid.Column="2" Content="Accuracy:" Grid.Row="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="10"/>
-            <TextBlock x:Name="tbl_accuracy" Grid.Column="3" Grid.Row="1" TextWrapping="Wrap"/>
+            <TextBlock x:Name="tbl_accuracy" Grid.Column="3" Grid.Row="1" TextWrapping="Wrap" Padding="0,5,0,0"/>
+            <TextBlock x:Name="tbl_misses" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap"/>
+            <CheckBox x:Name="checkbox" Grid.Column="4" Content="Resizing Targets" Grid.Row="1" Grid.ColumnSpan="2" VerticalContentAlignment="Center" FontSize="11" Checked="CheckBox_Checked"/>
         </Grid>
 
     </Grid>

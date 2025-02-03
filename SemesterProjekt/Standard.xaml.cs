@@ -23,11 +23,12 @@ namespace SemesterProjekt
     {
       
         private Random _random;
-        private int _targetCount;
-        private int _hitCount;
-        private int _misses;
-        private int _timerCounter;
-        private int _accuracy;
+        private int _targetCount ;
+        private double _hitCount;
+        private double _misses;
+        private int _timerCounter =1;
+        private double _accuracy;
+        private bool _isHit;
         public Standard()
         {
             InitializeComponent();
@@ -36,26 +37,33 @@ namespace SemesterProjekt
             StartSpawningTargets();
             //set file as resource first 
             this.Cursor = new Cursor(Application.GetResourceStream(new Uri("pack://application:,,,/Crosshair.cur")).Stream);
+            canvas.MouseLeftButtonDown += Canvas_MouseLeftButtonDown;
 
         }
-
         private void StartSpawningTargets()
         {
             // Set up a timer to spawn targets at random intervals
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
-            //timer.Tick += (sender, args) =>
-            //{
-            //    SetTargets();
-            //};
+
             timer.Tick += Tick;
             timer.Start();
         }
         private void Tick(object sender, EventArgs args)
         {
-            SetTargets();
-            lbl_timer.Content = _timerCounter;
-            _timerCounter++;
+            if (_timerCounter <=60)
+            {
+                SetTargets();
+                lbl_timer.Content = _timerCounter;
+                _timerCounter++;
+            }
+            else
+            {
+                DispatcherTimer timer = new DispatcherTimer();
+                timer.Stop();
+                AccuracyCalc();
+            }
+          
         }
         private void SetTargets()
         {
@@ -68,23 +76,35 @@ namespace SemesterProjekt
                 StrokeThickness = 1
             };
 
+
             double x = _random.NextDouble() * (canvas.ActualWidth - target.Width);
             double y = _random.NextDouble() * (canvas.ActualHeight - target.Height);
-            
-
+        
+          
             Canvas.SetLeft(target, x);
             Canvas.SetTop(target, y);
-            target.MouseLeftButtonDown += Target_MouseLeftButtonDown;
-
+          
             canvas.Children.Add(target);
+            target.MouseLeftButtonDown += Target_MouseLeftButtonDown;
+            
             RemoveTarget();
-         
             tbl_hits.Text = _hitCount.ToString();
             tbl_misses.Text = _misses.ToString();
 
-            _accuracy = (_hitCount / (_hitCount + _misses)) * 100;
-            tbl_accuracy.Text = _accuracy.ToString();
 
+        }
+        private double AccuracyCalc()
+        {
+            double total = _hitCount + _misses;
+            if (_hitCount > 0)
+            {
+                _accuracy = (_hitCount / total) ;
+            }
+            //apparently % in a string actually makes it in a percentage
+            tbl_accuracy.Text = _accuracy.ToString("0.##" + "%");
+
+
+            return _accuracy;
         }
         private void RemoveTarget()
         {
@@ -93,22 +113,53 @@ namespace SemesterProjekt
                 canvas.Children.RemoveAt(0);
                 _targetCount--;
                 _misses++;
-
+                
             }
             _targetCount++;
+        }
+        private void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+           
+            if(!_isHit)
+            {
+                _misses++;
+            }
+          _isHit = false;
+
         }
         private void Target_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var target = sender as UIElement;
-            if (target != null)
+
+            if (target != null && canvas.Children.Contains(target))
             {
+                _isHit = true;
                 canvas.Children.Remove(target);
                 _targetCount--;
                 _hitCount++;
-
             }
-        
+           
         }
 
+        private void ResizeTarget()
+        {
+            Ellipse target = new Ellipse
+            {
+                Width = 50,
+                Height = 50,
+                Fill = Brushes.Black,
+                Stroke = Brushes.Black,
+                StrokeThickness = 1
+            };
+            Random random = new Random(10);
+            Width = target.Width + random.Next(1, 11);
+            Height = target.Height + random.Next(1, 11);
+
+
+        }
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+           
+        }
     }
 }
