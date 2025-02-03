@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SemesterProjekt"
         mc:Ignorable="d"
-        Title="Standard" Height="450" Width="800" Background="#FF737070" >
-     <Grid ShowGridLines="True">
+        Title="Standard" Height="450" Width="800" Background="#FFD6CFCF" >
+    <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition/>
@@ -35,7 +35,14 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Name="tbl_hits" Grid.Column="1" TextWrapping="Wrap" Text="Hits:" Foreground="#FFD62323"/>
+            <TextBlock Name="tbl_hits" Grid.Column="1" TextWrapping="Wrap" Foreground="#FFD62323" Padding="0,5,0,0"/>
+            <TextBox Name="tbl_misses" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0,5,0,0"/>
+            <Label Content="Hits:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label Content="Miss:" Grid.Row="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Label Grid.Column="2" Content="Timer:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label x:Name="lbl_timer" Grid.Column="3" Content=""/>
+            <Label Grid.Column="2" Content="Accuracy:" Grid.Row="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="10"/>
+            <TextBlock x:Name="tbl_accuracy" Grid.Column="3" Grid.Row="1" TextWrapping="Wrap"/>
         </Grid>
 
     </Grid>

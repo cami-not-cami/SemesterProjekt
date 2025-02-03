@@ -8,4 +8,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Crosshair.cur" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Crosshair.cur" />
+  </ItemGroup>
+
 </Project>
