@@ -34,12 +34,14 @@ namespace SemesterProjekt
         }
         private void Predefined_Click(object sender, RoutedEventArgs e)
         {
-
+       
         }
 
         private void Creator_Click(object sender, RoutedEventArgs e)
         {
-
+            CreatorMode creatorMode = new CreatorMode();
+            creatorMode.Show();
+            this.Close();
         }
     }
 }

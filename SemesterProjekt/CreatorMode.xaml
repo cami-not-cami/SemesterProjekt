@@ -1,17 +1,17 @@
-﻿<Window x:Class="SemesterProjekt.Standard"
+﻿<Window x:Class="SemesterProjekt.CreatorMode"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SemesterProjekt"
         mc:Ignorable="d"
-        Title="Standard" Height="450" Width="800" Background="#FFD6CFCF" WindowStartupLocation="CenterScreen" >
+        Title="CreatorMode" Height="450" Width="800">
     <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Canvas Name ="canvas" Grid.Row="1" Background="#FF847B7B" ></Canvas>
+        <Canvas Name ="canvas" Grid.Row="1" ></Canvas>
         <Grid x:Name="menubar" Background="#FFAF9E9E">
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -44,8 +44,11 @@
             <TextBlock x:Name="tbl_accuracy"  Grid.Column="3" Grid.Row="1" TextWrapping="Wrap" Padding="0,5,0,0"/>
             <TextBlock x:Name="tbl_misses" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap"/>
             <CheckBox x:Name="checkbox" Grid.Column="4" Content="Resizing Targets"  Grid.Row="1" Grid.ColumnSpan="2" VerticalContentAlignment="Center" FontSize="11" />
+            <Button x:Name="btn_load" Grid.Column="6" Content="load" Click="btn_load_Click" Background="#FFF1A8A8"/>
+            <Label Grid.Column="4" Content="Background:" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.ColumnSpan="2"/>
         </Grid>
 
     </Grid>
 
+   
 </Window>
