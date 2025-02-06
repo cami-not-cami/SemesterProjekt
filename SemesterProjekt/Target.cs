@@ -24,7 +24,14 @@ namespace SemesterProjekt
         private bool _isHit;
         private bool _checkedSize;
         private List<Ellipse> targetList = new List<Ellipse>();
+        private List<Point> targetPoints = new List<Point>();
+        private bool _isCustomSet = false;
+        private bool _Start= false;
+
+        private int _customTargetIndex = 0;
+        
         private DispatcherTimer timer;
+
         public Target(Canvas canvas, Label lbl_timer, TextBlock tbl_hits, TextBlock tbl_misses, TextBlock tbl_accuracy, CheckBox checkbox)
         : base(canvas, lbl_timer, tbl_hits, tbl_misses, tbl_accuracy, checkbox)
         {
@@ -34,7 +41,7 @@ namespace SemesterProjekt
         public void StartSpawningTargets()
         {
             // Set up a timer to spawn targets at random intervals
-   
+
             timer.Interval = TimeSpan.FromSeconds(0.5);
 
             timer.Tick += Tick;
@@ -44,7 +51,11 @@ namespace SemesterProjekt
         {
             if (_timerCounter <= 60)
             {
-                SetTargets();
+                if (_isCustomSet)
+                    SetCustomTargets();
+                else
+                    SetTargets();
+
                 lbl_timer.Content = _timerCounter;
                 _timerCounter++;
             }
@@ -57,8 +68,57 @@ namespace SemesterProjekt
             }
 
         }
-        private void SetTargets()
+        private void SetCustomTargets()
         {
+            if (_Start)
+            {
+                if (targetPoints.Count == 0)
+                    return;
+
+                Point position = targetPoints[_customTargetIndex];
+                _customTargetIndex = (_customTargetIndex + 1) % targetPoints.Count; // Cycle through saved positions
+
+                Ellipse target = new Ellipse
+                {
+                    Width = 50,
+                    Height = 50,
+                    Fill = Brushes.Black,
+                    Stroke = Brushes.Black,
+                    StrokeThickness = 1
+                };
+
+                Canvas.SetLeft(target, position.X - target.Width / 2);
+                Canvas.SetTop(target, position.Y - target.Height / 2);
+                target.MouseLeftButtonDown += Target_MouseLeftButtonDown;
+                canvas.Children.Add(target);
+
+                //if its not checked we do standard random size
+                if (checkbox.IsChecked == true)
+                {
+                    DoubleAnimation resizing = new DoubleAnimation();
+                    resizing.From = target.Width - 10;
+                    resizing.To = 60;
+                    resizing.Duration = TimeSpan.FromSeconds(1);
+                    resizing.AutoReverse = true;
+                    resizing.RepeatBehavior = RepeatBehavior.Forever;
+                    target.BeginAnimation(Ellipse.WidthProperty, resizing);
+                    target.BeginAnimation(Ellipse.HeightProperty, resizing);
+
+                }
+                _checkedSize = false;
+                tbl_hits.Text = _hitCount.ToString();
+                tbl_misses.Text = _misses.ToString();
+
+                RemoveTarget();
+            }
+        }
+        public void StartGame(bool useClicks)
+        {
+            _isCustomSet = true;
+            StartSpawningTargets();
+        }
+        public void SetTargets()
+        {  
             Ellipse target = new Ellipse
             {
                 Width = 50,
@@ -67,21 +127,17 @@ namespace SemesterProjekt
                 Stroke = Brushes.Black,
                 StrokeThickness = 1
             };
-            double max = 60;
-
-            Coordinates(target, _random);
+            Coordinates(target);
 
             target.MouseLeftButtonDown += Target_MouseLeftButtonDown;
             canvas.Children.Add(target);
-
-
 
             //if its not checked we do standard random size
             if (checkbox.IsChecked == true)
             {
                 DoubleAnimation resizing = new DoubleAnimation();
                 resizing.From = target.Width - 10;
-                resizing.To = max;
+                resizing.To = 60;
                 resizing.Duration = TimeSpan.FromSeconds(1);
                 resizing.AutoReverse = true;
                 resizing.RepeatBehavior = RepeatBehavior.Forever;
@@ -90,9 +146,6 @@ namespace SemesterProjekt
 
             }
             _checkedSize = false;
-
-
-
             tbl_hits.Text = _hitCount.ToString();
             tbl_misses.Text = _misses.ToString();
 
@@ -107,12 +160,14 @@ namespace SemesterProjekt
             {
                 _isHit = true;
                 canvas.Children.Remove(target);
+              
+
                 _targetCount--;
                 _hitCount++;
             }
 
         }
-        private void Coordinates(Ellipse target, Random random)
+        private void Coordinates(Ellipse target)
         {
             bool overlap = false;
             double xCoord = 0;
@@ -121,32 +176,44 @@ namespace SemesterProjekt
             do
             {
                 overlap = false;
-                //coordinates random
-                xCoord = _random.NextDouble() * (canvas.ActualWidth - target.Width);
-                yCoord = _random.NextDouble() * (canvas.ActualHeight - target.Height);
 
-                //gets coordinates of rectangle since my targets are placed by top and left not point aka radius
-                Rect targetRect = new Rect(xCoord, yCoord, target.Width, target.Height);
-                foreach (Ellipse tar in targetList)
+                if (!_isCustomSet)
                 {
-                    //gets the coordinates after it is placed
-                    double placedX = Canvas.GetLeft(tar);
-                    double placedY = Canvas.GetTop(tar);
-                    //new coords of rectangle
-                    Rect newRect = new Rect(placedX, placedY, tar.Width, tar.Height);
+                    //coordinates random
+                    xCoord = _random.NextDouble() * (canvas.ActualWidth - target.Width);
+                    yCoord = _random.NextDouble() * (canvas.ActualHeight - target.Height);
 
-                    //if first rectangle intersects with the new one
-                    if (targetRect.IntersectsWith(newRect))
+                    //gets coordinates of rectangle since my targets are placed by top and left not point aka radius
+                    Rect targetRect = new Rect(xCoord, yCoord, target.Width, target.Height);
+                    foreach (Ellipse tar in targetList)
                     {
-                        overlap = true; break; //keeps trying until it doesnt overlap
+                        //gets the coordinates after it is placed
+                        double placedX = Canvas.GetLeft(tar);
+                        double placedY = Canvas.GetTop(tar);
+                        //new coords of rectangle
+                        Rect newRect = new Rect(placedX, placedY, tar.Width, tar.Height);
+
+                        //if first rectangle intersects with the new one
+                        if (targetRect.IntersectsWith(newRect))
+                        {
+                            overlap = true; break; //keeps trying until it doesnt overlap
+                        }
+
                     }
+                    //set targets on canvas
+                    Canvas.SetLeft(target, xCoord);
+                    Canvas.SetTop(target, yCoord);
+                    //add to list
+                    targetList.Add(target);
+                }
+                else if (_isCustomSet)
+                {
+                    xCoord = targetPoints[0].X;
+                    yCoord = targetPoints[0].Y;
+                    Canvas.SetLeft(target, xCoord);
+                    Canvas.SetTop(target, yCoord);
 
                 }
-                //set targets on canvas
-                Canvas.SetLeft(target, xCoord);
-                Canvas.SetTop(target, yCoord);
-                //add to list
-                targetList.Add(target);
 
 
             } while (overlap);
@@ -170,7 +237,7 @@ namespace SemesterProjekt
             if (_targetCount > 10)
             {
                 canvas.Children.RemoveAt(0);
-                targetList.RemoveAt(0);
+                //targetList.RemoveAt(0);
                 _targetCount--;
                 _misses++;
 
@@ -180,12 +247,48 @@ namespace SemesterProjekt
         public void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
-            if (!_isHit)
-            {
-                _misses++;
-            }
-            _isHit = false;
+                if (!_isHit)
+                {
+                    _misses++;
+                    tbl_misses.Text = _misses.ToString();
+                }
+                _isHit = false;
+            
 
+        }
+        public void Canvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+            if (_isCustomSet)
+            {
+
+                Point clickedPoint = e.GetPosition(canvas);
+                targetPoints.Add(clickedPoint);
+
+                // Show a preview of the target
+                Ellipse previewTarget = new Ellipse
+                {
+                    Width = 50,
+                    Height = 50,
+                    Fill = Brushes.Gold,
+                    Opacity = 0.5
+                };
+                Canvas.SetLeft(previewTarget, clickedPoint.X - previewTarget.Width / 2);
+                Canvas.SetTop(previewTarget, clickedPoint.Y - previewTarget.Height / 2);
+                canvas.Children.Add(previewTarget);
+                if(_Start)
+                {
+                    canvas.Children.Remove(previewTarget);
+                }
+            }
+
+        }
+
+        public void btn_start_Click(object sender, RoutedEventArgs e)
+        {
+            canvas.Children.Clear();
+            _Start =true;
+    
         }
     }
 

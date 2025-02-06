@@ -22,6 +22,7 @@ namespace SemesterProjekt
     /// </summary>
     public partial class Standard : Window
     {
+        private bool place=false;
         public Standard(Canvas canvas, Label lbl_timer, TextBlock tbl_hits, TextBlock tbl_misses, TextBlock tbl_accuracy, CheckBox checkbox)
         {
             this.canvas = canvas;

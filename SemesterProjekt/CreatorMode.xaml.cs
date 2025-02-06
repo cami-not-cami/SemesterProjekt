@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,7 @@ namespace SemesterProjekt
     /// </summary>
     public partial class CreatorMode : Window
     {
+        
         public CreatorMode(Canvas canvas, Label lbl_timer, TextBlock tbl_hits, TextBlock tbl_misses, TextBlock tbl_accuracy, CheckBox checkbox)
         {
             this.canvas = canvas;
@@ -32,12 +34,19 @@ namespace SemesterProjekt
         }
         public CreatorMode()
         {
+            bool iscustom=true;
             InitializeComponent();
             Target target = new Target(canvas,lbl_timer,tbl_hits,tbl_misses,tbl_accuracy,checkbox);
-            target.StartSpawningTargets();
-            
+            target.StartGame(iscustom);
+
+            this.Cursor = new Cursor(Application.GetResourceStream(new Uri("pack://application:,,,/Crosshair.cur")).Stream);
+            canvas.MouseLeftButtonDown += target.Canvas_MouseLeftButtonDown;
+            btn_start.Click += target.btn_start_Click;
+            canvas.MouseRightButtonDown += target.Canvas_MouseRightButtonDown;
+
+
+
         }
-      
 
         private void btn_load_Click(object sender, RoutedEventArgs e)
         {
@@ -56,5 +65,7 @@ namespace SemesterProjekt
           
 
         }
+
+     
     }
 }
