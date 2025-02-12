@@ -22,7 +22,7 @@ namespace SemesterProjekt
     /// </summary>
     public partial class Standard : Window
     {
-        private bool place=false;
+     
         public Standard(Canvas canvas, Label lbl_timer, TextBlock tbl_hits, TextBlock tbl_misses, TextBlock tbl_accuracy, CheckBox checkbox)
         {
             this.canvas = canvas;
@@ -31,6 +31,7 @@ namespace SemesterProjekt
             this.tbl_misses = tbl_misses;
             this.tbl_accuracy = tbl_accuracy;
             this.checkbox = checkbox;
+            
         }
         public Standard()
         {
@@ -42,7 +43,19 @@ namespace SemesterProjekt
             //set file as resource first 
             this.Cursor = new Cursor(Application.GetResourceStream(new Uri("pack://application:,,,/Crosshair.cur")).Stream);
             canvas.MouseLeftButtonDown += myTarget.Canvas_MouseLeftButtonDown;
+            btn_reset.Click += myTarget.btn_Reset_Click;
+            btn_start.Click += myTarget.btn_start_Click;
+            sld_slider.ValueChanged += myTarget.sld_slider_ValueChanged;
+            
+            
+
 
         }
+        private void sld_slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
+
+     
     }
 }

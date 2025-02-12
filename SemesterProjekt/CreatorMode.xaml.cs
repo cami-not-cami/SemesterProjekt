@@ -23,7 +23,7 @@ namespace SemesterProjekt
     public partial class CreatorMode : Window
     {
         
-        public CreatorMode(Canvas canvas, Label lbl_timer, TextBlock tbl_hits, TextBlock tbl_misses, TextBlock tbl_accuracy, CheckBox checkbox)
+        public CreatorMode(Canvas canvas, Label lbl_timer, TextBlock tbl_hits, TextBlock tbl_misses, TextBlock tbl_accuracy, CheckBox checkbox , Slider slider)
         {
             this.canvas = canvas;
             this.lbl_timer = lbl_timer;
@@ -31,22 +31,26 @@ namespace SemesterProjekt
             this.tbl_misses = tbl_misses;
             this.tbl_accuracy = tbl_accuracy;
             this.checkbox = checkbox;
+            
         }
         public CreatorMode()
         {
-            bool iscustom=true;
+            
             InitializeComponent();
             Target target = new Target(canvas,lbl_timer,tbl_hits,tbl_misses,tbl_accuracy,checkbox);
-            target.StartGame(iscustom);
+            
 
             this.Cursor = new Cursor(Application.GetResourceStream(new Uri("pack://application:,,,/Crosshair.cur")).Stream);
             canvas.MouseLeftButtonDown += target.Canvas_MouseLeftButtonDown;
             btn_start.Click += target.btn_start_Click;
             canvas.MouseRightButtonDown += target.Canvas_MouseRightButtonDown;
+            btn_reset.Click += target.btn_Reset_Click;
 
 
 
         }
+
+      
 
         private void btn_load_Click(object sender, RoutedEventArgs e)
         {

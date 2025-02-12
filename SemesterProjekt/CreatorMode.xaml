@@ -42,11 +42,13 @@
             <Label x:Name="lbl_timer" Grid.Column="3" Content=""/>
             <Label Grid.Column="2" Content="Accuracy:" Grid.Row="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="10"/>
             <TextBlock x:Name="tbl_accuracy"  Grid.Column="3" Grid.Row="1" TextWrapping="Wrap" Padding="0,5,0,0"/>
-            <TextBlock x:Name="tbl_misses" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap"/>
+            <TextBlock x:Name="tbl_misses" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Padding="0,5,0,0"/>
             <CheckBox x:Name="checkbox" Grid.Column="4" Content="Resizing Targets"  Grid.Row="1" Grid.ColumnSpan="2" VerticalContentAlignment="Center" FontSize="11" />
             <Button x:Name="btn_load" Grid.Column="6" Content="load" Click="btn_load_Click" Background="#FFF1A8A8"/>
             <Label Grid.Column="4" Content="Background:" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.ColumnSpan="2"/>
             <Button x:Name="btn_start" Grid.Column="8" Content="Start" Grid.Row="1" />
+            <Button x:Name="btn_reset" Grid.Column="8" Content="Reset"/>
+            <Slider x:Name="sld_slider" Grid.Column="10" Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
 
         </Grid>
 

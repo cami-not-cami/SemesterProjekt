@@ -27,9 +27,8 @@ namespace SemesterProjekt
         private List<Point> targetPoints = new List<Point>();
         private bool _isCustomSet = false;
         private bool _Start= false;
-
+        public double SizeSlider { get; set; } = 30.0;
         private int _customTargetIndex = 0;
-        
         private DispatcherTimer timer;
 
         public Target(Canvas canvas, Label lbl_timer, TextBlock tbl_hits, TextBlock tbl_misses, TextBlock tbl_accuracy, CheckBox checkbox)
@@ -40,15 +39,16 @@ namespace SemesterProjekt
 
         public void StartSpawningTargets()
         {
-            // Set up a timer to spawn targets at random intervals
+          
 
             timer.Interval = TimeSpan.FromSeconds(0.5);
-
             timer.Tick += Tick;
             timer.Start();
+
         }
         private void Tick(object sender, EventArgs args)
         {
+
             if (_timerCounter <= 60)
             {
                 if (_isCustomSet)
@@ -57,15 +57,13 @@ namespace SemesterProjekt
                     SetTargets();
 
                 lbl_timer.Content = _timerCounter;
-                _timerCounter++;
             }
             else
             {
-                DispatcherTimer timer = new DispatcherTimer();
-
                 timer.Stop();
                 AccuracyCalc();
             }
+            _timerCounter++;
 
         }
         private void SetCustomTargets()
@@ -80,9 +78,10 @@ namespace SemesterProjekt
 
                 Ellipse target = new Ellipse
                 {
+                    
                     Width = 50,
                     Height = 50,
-                    Fill = Brushes.Black,
+                    Fill = Brushes.CornflowerBlue,
                     Stroke = Brushes.Black,
                     StrokeThickness = 1
                 };
@@ -112,20 +111,16 @@ namespace SemesterProjekt
                 RemoveTarget();
             }
         }
-        public void StartGame(bool useClicks)
-        {
-            _isCustomSet = true;
-            StartSpawningTargets();
-        }
         public void SetTargets()
         {  
+            
             Ellipse target = new Ellipse
             {
-                Width = 50,
-                Height = 50,
+                Width = double.IsRealNumber(SizeSlider) ? SizeSlider : 1,
+                Height = double.IsRealNumber(SizeSlider) ? SizeSlider : 1,
                 Fill = Brushes.Black,
                 Stroke = Brushes.Black,
-                StrokeThickness = 1
+                StrokeThickness = double.IsRealNumber(SizeSlider) ? SizeSlider : 1
             };
             Coordinates(target);
 
@@ -136,7 +131,7 @@ namespace SemesterProjekt
             if (checkbox.IsChecked == true)
             {
                 DoubleAnimation resizing = new DoubleAnimation();
-                resizing.From = target.Width - 10;
+                resizing.From = SizeSlider;
                 resizing.To = 60;
                 resizing.Duration = TimeSpan.FromSeconds(1);
                 resizing.AutoReverse = true;
@@ -159,9 +154,7 @@ namespace SemesterProjekt
             if (target != null && canvas.Children.Contains(target))
             {
                 _isHit = true;
-                canvas.Children.Remove(target);
-              
-
+                canvas.Children.Remove(target); 
                 _targetCount--;
                 _hitCount++;
             }
@@ -237,7 +230,6 @@ namespace SemesterProjekt
             if (_targetCount > 10)
             {
                 canvas.Children.RemoveAt(0);
-                //targetList.RemoveAt(0);
                 _targetCount--;
                 _misses++;
 
@@ -246,19 +238,16 @@ namespace SemesterProjekt
         }
         public void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
                 if (!_isHit)
                 {
                     _misses++;
                     tbl_misses.Text = _misses.ToString();
                 }
                 _isHit = false;
-            
-
         }
         public void Canvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            _isCustomSet = true;
             if (_isCustomSet)
             {
 
@@ -276,19 +265,41 @@ namespace SemesterProjekt
                 Canvas.SetLeft(previewTarget, clickedPoint.X - previewTarget.Width / 2);
                 Canvas.SetTop(previewTarget, clickedPoint.Y - previewTarget.Height / 2);
                 canvas.Children.Add(previewTarget);
-                if(_Start)
-                {
-                    canvas.Children.Remove(previewTarget);
-                }
             }
-
         }
-
         public void btn_start_Click(object sender, RoutedEventArgs e)
         {
-            canvas.Children.Clear();
             _Start =true;
-    
+            //_isCustomSet = true;
+            StartSpawningTargets();
+        }
+        public void btn_Reset_Click(object sender, RoutedEventArgs e)
+        {
+            
+            _timerCounter = 0;
+
+            canvas.Children.Clear();
+            targetList.Clear();
+            targetPoints.Clear();
+            timer.Tick -= Tick;
+
+            _targetCount = 0;
+            _hitCount = 0;
+            _misses = 0;
+            _accuracy = 0;
+
+            _customTargetIndex = 0;
+
+            tbl_hits.Text = string.Empty;
+            tbl_accuracy.Text = string.Empty;
+            tbl_misses.Text = string.Empty;
+            lbl_timer.Content = string.Empty;
+
+        }
+        public void sld_slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+                             //triggers event that gets the new value from the ui as the user interacts with it
+            SizeSlider = e.NewValue;
         }
     }
 
