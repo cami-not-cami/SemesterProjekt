@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SemesterProjekt"
         mc:Ignorable="d"
-        Title="Standard" Height="450" Width="800" Background="#FFD6CFCF" WindowStartupLocation="CenterScreen" >
+        Title="Standard" Height="600" Width="950" Background="#FFD6CFCF" WindowStartupLocation="CenterScreen" >
     <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -46,7 +46,7 @@
             <CheckBox x:Name="checkbox" Grid.Column="4" Content="Dynamic Targets"  Grid.Row="1" Grid.ColumnSpan="2" VerticalContentAlignment="Center" FontSize="11" />
             <Button x:Name="btn_reset" Grid.Column="7" Content="Reset"/>
             <Button x:Name="btn_start" Grid.Column="7" Content="Start" Grid.Row="1"/>
-            <Slider x:Name="sld_slider" Minimum="30" Maximum="70" Value="{Binding SizeSlider}" ValueChanged="sld_slider_ValueChanged" SmallChange="5"  Grid.Column="4" Grid.ColumnSpan="2" />
+            <Slider x:Name="sld_slider"  Minimum="20" Maximum="60" Value="{Binding SizeSlider}" ValueChanged="sld_slider_ValueChanged" SmallChange="5"  Grid.Column="4" Grid.ColumnSpan="2" />
         </Grid>
 
     </Grid>

@@ -48,7 +48,7 @@
             <Label Grid.Column="4" Content="Background:" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.ColumnSpan="2"/>
             <Button x:Name="btn_start" Grid.Column="8" Content="Start" Grid.Row="1" />
             <Button x:Name="btn_reset" Grid.Column="8" Content="Reset"/>
-            <Slider x:Name="sld_slider" Grid.Column="10" Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+            <Slider x:Name="sld_slider" Grid.Column="10" Minimum="20" Maximum="60" Value="{Binding SizeSlider}" ValueChanged="sld_slider_ValueChanged" SmallChange="5" Grid.ColumnSpan="2"/>
 
         </Grid>
 

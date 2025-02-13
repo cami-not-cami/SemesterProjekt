@@ -45,13 +45,11 @@ namespace SemesterProjekt
             btn_start.Click += target.btn_start_Click;
             canvas.MouseRightButtonDown += target.Canvas_MouseRightButtonDown;
             btn_reset.Click += target.btn_Reset_Click;
+            sld_slider.ValueChanged += target.sld_slider_ValueChanged;
 
 
 
         }
-
-      
-
         private void btn_load_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -70,6 +68,9 @@ namespace SemesterProjekt
 
         }
 
-     
+        private void sld_slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
     }
 }
