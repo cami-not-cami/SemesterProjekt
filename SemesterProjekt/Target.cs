@@ -40,8 +40,7 @@ namespace SemesterProjekt
 
         public void StartSpawningTargets()
         {
-
-
+            if(!_Start) return;
             timer.Interval = TimeSpan.FromMilliseconds(200);
             //timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick -= Tick;
@@ -54,6 +53,7 @@ namespace SemesterProjekt
 
             if (_timerCounter <= 60)
             {
+                canvas.IsEnabled = true;
                 if (_isCustomSet)
                 {
                     SetCustomTargets();
@@ -68,6 +68,7 @@ namespace SemesterProjekt
             else
             {
                 timer.Stop();
+                canvas.IsEnabled = false;
                 AccuracyCalc();
             }
             _timerCounter++;
@@ -75,6 +76,7 @@ namespace SemesterProjekt
         }
         private void SetCustomTargets()
         {
+
             if (_Start)
             {
                 if (targetPoints.Count == 0)
@@ -279,7 +281,7 @@ namespace SemesterProjekt
         public void Canvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             _isCustomSet = true;
-            if (_isCustomSet)
+            if (_isCustomSet && !_Start)
             {
 
                 Point clickedPoint = e.GetPosition(canvas);
@@ -304,14 +306,19 @@ namespace SemesterProjekt
         public void btn_start_Click(object sender, RoutedEventArgs e)
         {
             _Start = true;
-            //_isCustomSet = true;
+            canvas.IsEnabled = true;
             StartSpawningTargets();
         }
         public void btn_Reset_Click(object sender, RoutedEventArgs e)
         {
             
-       
-
+          canvas.IsEnabled = false;
+            _Start = false;
+            if (_isCustomSet)
+            {
+                canvas.IsEnabled = true;
+                
+            }
             _timerCounter = 0;
 
             canvas.Children.Clear();
@@ -339,10 +346,7 @@ namespace SemesterProjekt
             SizeSlider = Math.Min(e.NewValue, 80);
 
         }
-        private void DisableInput()
-        {
-
-        }
+   
     }
 
 }
