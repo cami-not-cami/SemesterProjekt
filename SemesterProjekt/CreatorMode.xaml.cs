@@ -46,7 +46,7 @@ namespace SemesterProjekt
             canvas.MouseRightButtonDown += target.Canvas_MouseRightButtonDown;
             btn_reset.Click += target.btn_Reset_Click;
             sld_slider.ValueChanged += target.sld_slider_ValueChanged;
-
+            
 
 
         }
@@ -71,6 +71,13 @@ namespace SemesterProjekt
         private void sld_slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
 
+        }
+
+        private void btn_mainMenu_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
         }
     }
 }

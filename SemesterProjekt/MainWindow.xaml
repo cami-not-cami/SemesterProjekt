@@ -17,5 +17,6 @@
         <Button Name="Creator" Content="Creator Studio" HorizontalAlignment="Left" Height="50" Margin="288,240,0,0" VerticalAlignment="Top" Width="170" Background="{x:Null}" Click="Creator_Click" Foreground="#FFFF5504" BorderBrush="{x:Null}"/>
         <Button Name="Predefined" Content="Predefined" HorizontalAlignment="Left" Height="50" Margin="288,315,0,0" VerticalAlignment="Top" Width="170" Background="{x:Null}" Click="Predefined_Click" BorderBrush="{x:Null}" Foreground="#FFFF5504"/>
         <TextBlock  HorizontalAlignment="Left" Height="78" TextWrapping="Wrap" Text="Welcome to AimTrainer!" VerticalAlignment="Top" Width="288" Foreground="White" FontFamily="Viner Hand ITC" TextAlignment="Center" Margin="229,10,0,0"/>
+        <Button x:Name="btn_exit" Content="exit" Margin="288,370,342,20" Click="btn_exit_Click"/>
     </Grid>
 </Window>

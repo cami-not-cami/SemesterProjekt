@@ -47,6 +47,7 @@
             <Button x:Name="btn_reset" Grid.Column="7" Content="Reset"/>
             <Button x:Name="btn_start" Grid.Column="7" Content="Start" Grid.Row="1"/>
             <Slider x:Name="sld_slider"  Minimum="20" Maximum="60" Value="{Binding SizeSlider}" ValueChanged="sld_slider_ValueChanged" SmallChange="5"  Grid.Column="4" Grid.ColumnSpan="2" />
+            <Button x:Name="btn_mainMenu" Grid.Column="8" Content="Main Menu" FontSize="11" Click="btn_mainMenu_Click"/>
         </Grid>
 
     </Grid>

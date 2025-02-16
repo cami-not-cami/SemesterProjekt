@@ -18,22 +18,22 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="38*"/>
+                <ColumnDefinition Width="47*"/>
+                <ColumnDefinition Width="65*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Name="tbl_hits" Grid.Column="1" TextWrapping="Wrap" Foreground="#FFD62323" Padding="0,5,0,0"/>
             <Label Content="Hits:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
@@ -49,10 +49,11 @@
             <Button x:Name="btn_start" Grid.Column="8" Content="Start" Grid.Row="1" />
             <Button x:Name="btn_reset" Grid.Column="8" Content="Reset"/>
             <Slider x:Name="sld_slider" Grid.Column="10" Minimum="20" Maximum="60" Value="{Binding SizeSlider}" ValueChanged="sld_slider_ValueChanged" SmallChange="5" Grid.ColumnSpan="2"/>
+            <Button x:Name="btn_mainMenu" Grid.Column="9" Content="Main Menu" FontSize="11" Click="btn_mainMenu_Click" Grid.Row="1"/>
 
         </Grid>
 
     </Grid>
 
-   
+
 </Window>

@@ -43,5 +43,10 @@ namespace SemesterProjekt
             creatorMode.Show();
             this.Close();
         }
+
+        private void btn_exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

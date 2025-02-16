@@ -50,8 +50,8 @@ namespace SemesterProjekt
         }
         private void Tick(object sender, EventArgs args)
         {
-
-            if (_timerCounter <= 60)
+            
+            if (_timerCounter <= 60 )
             {
                 canvas.IsEnabled = true;
                 if (_isCustomSet)
@@ -76,14 +76,14 @@ namespace SemesterProjekt
         }
         private void SetCustomTargets()
         {
-
+           
             if (_Start)
             {
                 if (targetPoints.Count == 0)
                     return;
 
-                Point position = targetPoints[_random.Next(_customTargetIndex)];
-                _customTargetIndex = (_customTargetIndex + _random.Next()) % targetPoints.Count; // Cycle through saved positions
+                Point position = targetPoints[_customTargetIndex];
+                _customTargetIndex = ((_customTargetIndex + 1) % targetPoints.Count); // Cycle through saved positions
 
 
               
@@ -99,6 +99,8 @@ namespace SemesterProjekt
 
                 Canvas.SetLeft(target, position.X - target.Width / 2);
                 Canvas.SetTop(target, position.Y - target.Height / 2);
+
+                target.MouseLeftButtonDown -= Target_MouseLeftButtonDown;
                 target.MouseLeftButtonDown += Target_MouseLeftButtonDown;
                 canvas.Children.Add(target);
 
@@ -121,6 +123,9 @@ namespace SemesterProjekt
 
                 RemoveTarget();
             }
+            
+                
+
         }
         public void SetTargets()
         {
@@ -146,8 +151,7 @@ namespace SemesterProjekt
             //if its not checked we do standard random size
             if (checkbox.IsChecked == true)
             {
-                     Dispatcher.InvokeAsync(() =>
-                     {
+                   
                         DoubleAnimation resizing = new DoubleAnimation();
                         resizing.From = SizeSlider;
                         resizing.To = Math.Min(SizeSlider * 1.5, 68);
@@ -156,7 +160,7 @@ namespace SemesterProjekt
                         resizing.RepeatBehavior = RepeatBehavior.Forever;
                         target.BeginAnimation(Ellipse.WidthProperty, resizing);
                         target.BeginAnimation(Ellipse.HeightProperty, resizing);
-                     });
+                     
             }
             _checkedSize = false;
             tbl_hits.Text = _hitCount.ToString();
@@ -271,6 +275,7 @@ namespace SemesterProjekt
         }
         public void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (!_Start) return;
             if (!_isHit)
             {
                 _misses++;
@@ -280,9 +285,9 @@ namespace SemesterProjekt
         }
         public void Canvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (_Start) return;
             _isCustomSet = true;
-            if (_isCustomSet && !_Start)
-            {
+          
 
                 Point clickedPoint = e.GetPosition(canvas);
                 targetPoints.Add(clickedPoint);
@@ -301,42 +306,41 @@ namespace SemesterProjekt
                 Canvas.SetTop(previewTarget, clickedPoint.Y - previewTarget.Height / 2);
                 
                 canvas.Children.Add(previewTarget);
-            }
+            
         }
         public void btn_start_Click(object sender, RoutedEventArgs e)
         {
+            canvas.IsHitTestVisible = true;
+
             _Start = true;
-            canvas.IsEnabled = true;
+            //canvas.IsEnabled = true;
             StartSpawningTargets();
         }
         public void btn_Reset_Click(object sender, RoutedEventArgs e)
         {
-            
-          canvas.IsEnabled = false;
             _Start = false;
-            if (_isCustomSet)
-            {
-                canvas.IsEnabled = true;
-                
-            }
-            _timerCounter = 0;
-
-            canvas.Children.Clear();
-            targetList.Clear();
-            targetPoints.Clear();
-            timer.Tick -= Tick;
-
+            _customTargetIndex = 0;
             _targetCount = 0;
             _hitCount = 0;
             _misses = 0;
             _accuracy = 0;
+            _timerCounter = 0;
+            timer.Stop();
 
-            _customTargetIndex = 0;
+            timer.Tick -= Tick;
+
+            canvas.Children.Clear();
+            targetList.Clear();
+
+            if(_isCustomSet)
+                targetPoints.Clear();
 
             tbl_hits.Text = string.Empty;
             tbl_accuracy.Text = string.Empty;
             tbl_misses.Text = string.Empty;
             lbl_timer.Content = string.Empty;
+
+            canvas.IsHitTestVisible=true;
 
         }
         public void sld_slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
