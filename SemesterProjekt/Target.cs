@@ -10,6 +10,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Windows;
 using System.Windows.Input;
+using System.Reflection;
 
 namespace SemesterProjekt
 {
@@ -30,13 +31,17 @@ namespace SemesterProjekt
         public double SizeSlider { get; set; } = 30.0;
         private int _customTargetIndex = 0;
         private DispatcherTimer timer;
+        private List<Point> usedPositions = new List<Point>();
 
+
+        private int _customTargetCounter = 0;
         public Target(Canvas canvas, Label lbl_timer, TextBlock tbl_hits, TextBlock tbl_misses, TextBlock tbl_accuracy, CheckBox checkbox)
         : base(canvas, lbl_timer, tbl_hits, tbl_misses, tbl_accuracy, checkbox)
         {
             timer = new DispatcherTimer();
 
         }
+        
 
         public void StartSpawningTargets()
         {
@@ -75,23 +80,26 @@ namespace SemesterProjekt
             _timerCounter++;
 
         }
+      
+    
         private void SetCustomTargets()
         {
-
             if (_Start)
             {
                 if (targetPoints.Count == 0)
                     return;
+  
+                Point position;
+                position = targetPoints[_random.Next(targetPoints.Count)];
+                int index = targetPoints.IndexOf(position);
+                usedPositions.Add(position);
 
-                //Point position = targetPoints[_customTargetIndex];
-               //  _customTargetIndex = ((_customTargetIndex + 1) % targetPoints.Count); // Cycle through saved positions
-
-               //Point position = targetPoints[_random.Next(targetPoints.Count)];
+                //do
+                //{
+                //
+                    
+                //} while (usedPositions.Contains(position));
                 
-                    int index = _random.Next(targetPoints.Count);
-                    Point position = targetPoints[index];
-                    targetPoints.RemoveAt(index); // Remove the used point
-               
                 Ellipse target = new Ellipse
                 {
                     Width = double.IsRealNumber(SizeSlider) ? SizeSlider : 1,
@@ -100,11 +108,7 @@ namespace SemesterProjekt
                     Stroke = Brushes.Black,
                     StrokeThickness = 1
                 };
-                
-                Canvas.SetLeft(target, position.X - target.Width / 2);
-                Canvas.SetTop(target, position.Y - target.Height / 2);
-
-
+               
                 target.MouseLeftButtonDown -= Target_MouseLeftButtonDown;
                 target.MouseLeftButtonDown += Target_MouseLeftButtonDown;
 
@@ -124,13 +128,29 @@ namespace SemesterProjekt
                 _checkedSize = false;
                 tbl_hits.Text = _hitCount.ToString();
                 tbl_misses.Text = _misses.ToString();
-                canvas.Children.Add(target);
 
+                Canvas.SetLeft(target, position.X - target.Width / 2);
+                Canvas.SetTop(target, position.Y - target.Height / 2);
+
+                //if (position  == targetPoints[index] )
+                //{
+                //    canvas.Children.RemoveAt(index);
+                //}
+                if (_customTargetCounter >= targetPoints.Count)
+                {
+
+                    return;
+
+                }
+                else
+                {
+                    
+                    _customTargetCounter++;
+                    canvas.Children.Add(target);
+                }
                 RemoveTarget();
+
             }
-
-
-
         }
         public void SetTargets()
         {
@@ -184,6 +204,8 @@ namespace SemesterProjekt
                 _isHit = true;
                 canvas.Children.Remove(target);
                 _targetCount--;
+                _customTargetCounter--;
+
                 _hitCount++;
             }
 
@@ -234,7 +256,7 @@ namespace SemesterProjekt
                     //add to list
                     targetList.Add(target);
                 }
-               
+
                 if (watchdogCounter > 50)
 
                 {
@@ -275,6 +297,7 @@ namespace SemesterProjekt
             if (!_isHit)
             {
                 _misses++;
+
                 tbl_misses.Text = _misses.ToString();
             }
             _isHit = false;
@@ -294,17 +317,17 @@ namespace SemesterProjekt
                 Stroke = Brushes.Red,
                 StrokeThickness = 1
             };
-            
+
             Canvas.SetLeft(previewTarget, clickedPoint.X - previewTarget.Width / 2);
             Canvas.SetTop(previewTarget, clickedPoint.Y - previewTarget.Height / 2);
-            //Coordinates(previewTarget);
+          
             //inverts
-            if(!CheckCustomCoordinates(clickedPoint))
+            if (!CheckCustomCoordinates(clickedPoint))
             {
                 previewTarget = null;
                 return;
             }
-        
+
             targetPoints.Add(clickedPoint);
             canvas.Children.Add(previewTarget);
 
@@ -317,10 +340,10 @@ namespace SemesterProjekt
 
             Rect temprect = new Rect(punkt.X, punkt.Y, SizeSlider, SizeSlider);
 
-            foreach(var item in targetPoints)
+            foreach (var item in targetPoints)
             {
                 // create a Rectangle around Point and check if intersects with Point
-                if(temprect.IntersectsWith(new Rect(item.X, item.Y, 10, 10)))
+                if (temprect.IntersectsWith(new Rect(item.X, item.Y, SizeSlider - 10, SizeSlider - 10)))
                 {
                     //overlap/no good
                     return false;
@@ -347,6 +370,7 @@ namespace SemesterProjekt
             _accuracy = 0;
             _timerCounter = 0;
             timer.Stop();
+            _customTargetCounter = 0;
 
             timer.Tick -= Tick;
 
