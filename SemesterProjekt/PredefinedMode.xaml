@@ -1,11 +1,11 @@
-﻿<Window x:Class="SemesterProjekt.CreatorMode"
+﻿<Window x:Class="SemesterProjekt.PredefinedMode"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SemesterProjekt"
         mc:Ignorable="d"
-        Title="CreatorMode" Height="450" Width="800">
+        Title="PredefinedMode" Height="450" Width="800">
     <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -50,7 +50,7 @@
             <Button x:Name="btn_reset" Grid.Column="8" Content="Reset"/>
             <Slider x:Name="sld_slider" Grid.Column="6" Minimum="20" Maximum="60" Value="{Binding SizeSlider}" ValueChanged="sld_slider_ValueChanged" SmallChange="5" Grid.ColumnSpan="3" Grid.Row="1" Margin="1,0,48,0"/>
             <Button x:Name="btn_mainMenu" Grid.Column="8" Content="Main Menu" FontSize="11" Click="btn_mainMenu_Click" Background="#FFD8D8D8" Grid.ColumnSpan="2" Margin="48,0,0,0"/>
-           
+
 
 
         </Grid>

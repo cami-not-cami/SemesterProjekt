@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SemesterProjekt
 {
-    class CreatorClass
+    internal class PredefinedClass
     {
     }
 }

@@ -31,6 +31,7 @@ namespace SemesterProjekt
             this.tbl_misses = tbl_misses;
             this.tbl_accuracy = tbl_accuracy;
             this.checkbox = checkbox;
+
             
         }
         public Standard()
@@ -62,5 +63,7 @@ namespace SemesterProjekt
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
         }
+
+       
     }
 }

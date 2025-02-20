@@ -19,9 +19,6 @@ namespace SemesterProjekt
         public MainWindow()
         {
             InitializeComponent();
-            
-
-
         }
 
         private void Standard_Click(object sender, RoutedEventArgs e)
@@ -34,7 +31,9 @@ namespace SemesterProjekt
         }
         private void Predefined_Click(object sender, RoutedEventArgs e)
         {
-       
+            PredefinedMode predefinedMode = new PredefinedMode();
+            predefinedMode.Show();
+            this.Close();
         }
 
         private void Creator_Click(object sender, RoutedEventArgs e)

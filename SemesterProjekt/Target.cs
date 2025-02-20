@@ -31,7 +31,9 @@ namespace SemesterProjekt
         public double SizeSlider { get; set; } = 30.0;
         private int _customTargetIndex = 0;
         private DispatcherTimer timer;
-        private List<Point> usedPositions = new List<Point>();
+        private UIElement _currentTarget;
+        private bool _randomizePlacement = false;
+        
 
 
         private int _customTargetCounter = 0;
@@ -46,8 +48,8 @@ namespace SemesterProjekt
         public void StartSpawningTargets()
         {
             if (!_Start) return;
-            timer.Interval = TimeSpan.FromMilliseconds(200);
-            //timer.Interval = TimeSpan.FromSeconds(1);
+            //timer.Interval = TimeSpan.FromMilliseconds(200);
+            timer.Interval = TimeSpan.FromSeconds(0.8);
             timer.Tick -= Tick;
             timer.Tick += Tick;
             timer.Start();
@@ -74,7 +76,7 @@ namespace SemesterProjekt
             else
             {
                 //timer.Stop();
-                //canvas.IsEnabled = false;
+                
                 AccuracyCalc();
             }
             _timerCounter++;
@@ -86,20 +88,7 @@ namespace SemesterProjekt
         {
             if (_Start)
             {
-                if (targetPoints.Count == 0)
-                    return;
-  
                 Point position;
-                position = targetPoints[_random.Next(targetPoints.Count)];
-                int index = targetPoints.IndexOf(position);
-                usedPositions.Add(position);
-
-                //do
-                //{
-                //
-                    
-                //} while (usedPositions.Contains(position));
-                
                 Ellipse target = new Ellipse
                 {
                     Width = double.IsRealNumber(SizeSlider) ? SizeSlider : 1,
@@ -108,6 +97,23 @@ namespace SemesterProjekt
                     Stroke = Brushes.Black,
                     StrokeThickness = 1
                 };
+
+                if (targetPoints.Count < 5)
+                {
+                    MessageBox.Show("You need at least 5 Targets");
+                    canvas.Children.Clear();
+                    _Start = false;
+                    timer.Stop();
+                    _timerCounter = 0;
+
+                    return;
+                }
+                 position = targetPoints[_random.Next(targetPoints.Count)];
+
+                if (_currentTarget != null)
+                {
+                    canvas.Children.Remove(_currentTarget);
+                }
                
                 target.MouseLeftButtonDown -= Target_MouseLeftButtonDown;
                 target.MouseLeftButtonDown += Target_MouseLeftButtonDown;
@@ -132,22 +138,8 @@ namespace SemesterProjekt
                 Canvas.SetLeft(target, position.X - target.Width / 2);
                 Canvas.SetTop(target, position.Y - target.Height / 2);
 
-                //if (position  == targetPoints[index] )
-                //{
-                //    canvas.Children.RemoveAt(index);
-                //}
-                if (_customTargetCounter >= targetPoints.Count)
-                {
-
-                    return;
-
-                }
-                else
-                {
-                    
-                    _customTargetCounter++;
-                    canvas.Children.Add(target);
-                }
+                canvas.Children.Add(target);
+                _currentTarget = target;
                 RemoveTarget();
 
             }
@@ -205,7 +197,6 @@ namespace SemesterProjekt
                 canvas.Children.Remove(target);
                 _targetCount--;
                 _customTargetCounter--;
-
                 _hitCount++;
             }
 
@@ -355,9 +346,9 @@ namespace SemesterProjekt
         public void btn_start_Click(object sender, RoutedEventArgs e)
         {
             canvas.IsHitTestVisible = true;
-
+            canvas.Children.Clear();
             _Start = true;
-            //canvas.IsEnabled = true;
+            
             StartSpawningTargets();
         }
         public void btn_Reset_Click(object sender, RoutedEventArgs e)
@@ -371,6 +362,7 @@ namespace SemesterProjekt
             _timerCounter = 0;
             timer.Stop();
             _customTargetCounter = 0;
+            
 
             timer.Tick -= Tick;
 
@@ -395,7 +387,7 @@ namespace SemesterProjekt
             SizeSlider = Math.Min(e.NewValue, 80);
 
         }
-
+     
     }
 
 }

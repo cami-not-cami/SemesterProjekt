@@ -46,7 +46,6 @@ namespace SemesterProjekt
             canvas.MouseRightButtonDown += target.Canvas_MouseRightButtonDown;
             btn_reset.Click += target.btn_Reset_Click;
             sld_slider.ValueChanged += target.sld_slider_ValueChanged;
-            
 
 
         }
