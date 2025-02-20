@@ -51,7 +51,16 @@ namespace SemesterProjekt
             {
 
                 level = JsonLoader.ReadFromJsonFile<Level>(openFileDialog.FileName);
+                if(level != null)
+                {
+                    ImageBrush imageBrush = new ImageBrush();
+                    imageBrush.ImageSource = new BitmapImage(new Uri(level.BackgroundImage));
+                    imageBrush.Stretch = Stretch.UniformToFill;
 
+                    canvas.Background = imageBrush;
+                
+                    
+                }
 
             }
         }

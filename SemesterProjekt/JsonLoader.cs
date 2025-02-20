@@ -20,11 +20,11 @@ namespace SemesterProjekt
             {
                 return JsonSerializer.Deserialize<T>(File.ReadAllText(path));
 
-            }
-            finally
+            }finally 
             {
-                MessageBox.Show("fehler");
+                MessageBox.Show("Level loaded");
             }
+           
 
         }
 
