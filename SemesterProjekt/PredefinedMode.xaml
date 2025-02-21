@@ -35,7 +35,7 @@
                 <ColumnDefinition Width="53*"/>
                 <ColumnDefinition Width="53*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Name="tbl_hits" Grid.Column="1" TextWrapping="Wrap" Foreground="#FFD62323" Padding="0,5,0,0" Grid.ColumnSpan="2" Margin="0,0,52,0"/>
+            <TextBlock Name="tbl_hits" Grid.Column="1" TextWrapping="Wrap" Foreground="#FFD62323" Padding="0,5,0,0" />
             <Label Content="Hits:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.ColumnSpan="2" Margin="0,0,32,0"/>
             <Label Content="Miss:" Grid.Row="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.ColumnSpan="2" Margin="0,0,32,0"/>
             <Label Grid.Column="2" Content="Timer:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
@@ -46,10 +46,10 @@
             <CheckBox x:Name="checkbox" Grid.Column="3" Content="Animation"  Grid.Row="1" Grid.ColumnSpan="4" VerticalContentAlignment="Center" FontSize="11" Margin="32,0,55,0" />
             <Button x:Name="btn_load" Grid.Column="6" Content="load" Click="btn_load_Click" Background="#FFF1A8A8" Grid.ColumnSpan="2"/>
             <Label Grid.Column="3" Content="Background:" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.ColumnSpan="4" Margin="32,0,55,0"/>
-            <Button x:Name="btn_start" Grid.Column="8" Content="Start" Grid.Row="1" />
-            <Button x:Name="btn_reset" Grid.Column="8" Content="Reset"/>
-            <Slider x:Name="sld_slider" Grid.Column="6" Minimum="20" Maximum="60" Value="{Binding SizeSlider}" ValueChanged="sld_slider_ValueChanged" SmallChange="5" Grid.ColumnSpan="3" Grid.Row="1" Margin="1,0,48,0"/>
-            <Button x:Name="btn_mainMenu" Grid.Column="8" Content="Main Menu" FontSize="11" Click="btn_mainMenu_Click" Background="#FFD8D8D8" Grid.ColumnSpan="2" Margin="48,0,0,0"/>
+            <Button x:Name="btn_Start" Grid.Column="8" Content="Start" Grid.Row="1" Click="btn_start_Click"  />
+            <Button x:Name="btn_reset" Grid.Column="8" Content="Reset" />
+          
+            <Button x:Name="btn_mainMenu" Grid.Column="9" Content="Main Menu" FontSize="11" Click="btn_mainMenu_Click" Background="#FFD8D8D8"/>
 
 
 

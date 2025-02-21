@@ -9,7 +9,7 @@ namespace SemesterProjekt
 {
     public class Level
     {
-       public List<Point> Coordinates = new List<Point>();
+       public List<Point> Coordinates { get; set; } 
         public string BackgroundImage { get; set; }
     }
 }

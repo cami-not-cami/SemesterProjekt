@@ -20,9 +20,11 @@ namespace SemesterProjekt
             {
                 return JsonSerializer.Deserialize<T>(File.ReadAllText(path));
 
-            }finally 
+            }
+            catch(Exception ex) 
             {
-                MessageBox.Show("Level loaded");
+                MessageBox.Show($"Erorr loading file:{ex.Message}");
+                return new T();
             }
            
 

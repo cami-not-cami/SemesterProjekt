@@ -17,21 +17,21 @@ namespace SemesterProjekt
     public class Target : Standard
     {
         private Random _random = new Random();
-        private int _targetCount;
-        private double _hitCount;
-        private double _misses;
-        private int _timerCounter = 1;
-        private double _accuracy;
-        private bool _isHit;
-        private bool _checkedSize;
+        internal int _targetCount;
+        internal double _hitCount;
+        internal double _misses;
+        internal int _timerCounter = 1;
+        internal double _accuracy;
+        internal bool _isHit;
+        internal bool _checkedSize;
         private List<Ellipse> targetList = new List<Ellipse>();
-        private List<Point> targetPoints = new List<Point>();
+        public List<Point> targetPoints = new List<Point>();
         private bool _isCustomSet = false;
-        private bool _Start = false;
+        internal bool _Start = false;
         public double SizeSlider { get; set; } = 30.0;
-        private int _customTargetIndex = 0;
-        private DispatcherTimer timer;
-        private UIElement _currentTarget;
+        public int _customTargetIndex = 0;
+        internal DispatcherTimer timer;
+        internal UIElement _currentTarget;
         private bool _randomizePlacement = false;
         
 
@@ -55,7 +55,7 @@ namespace SemesterProjekt
             timer.Start();
 
         }
-        private void Tick(object sender, EventArgs args)
+        internal void Tick(object sender, EventArgs args)
         {
 
             if (_timerCounter <= 60)
@@ -66,7 +66,7 @@ namespace SemesterProjekt
 
                     SetCustomTargets();
                 }
-                else
+                else 
                 {
                     SetTargets();
                 }
@@ -83,8 +83,9 @@ namespace SemesterProjekt
 
         }
       
-    
-        private void SetCustomTargets()
+
+
+        internal void SetCustomTargets()
         {
             if (_Start)
             {
@@ -187,7 +188,7 @@ namespace SemesterProjekt
 
 
         }
-        private void Target_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        internal void Target_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var target = sender as UIElement;
 
@@ -258,7 +259,7 @@ namespace SemesterProjekt
 
             return true;
         }
-        private double AccuracyCalc()
+        internal double AccuracyCalc()
         {
             double total = _hitCount + _misses;
             if (_hitCount > 0)
@@ -271,7 +272,7 @@ namespace SemesterProjekt
 
             return _accuracy;
         }
-        private void RemoveTarget()
+        internal void RemoveTarget()
         {
             while (canvas.Children.Count > 10)
             {
