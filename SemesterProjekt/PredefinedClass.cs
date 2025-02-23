@@ -50,22 +50,23 @@ namespace SemesterProjekt
 
         }
 
-        // Create a Rnd Target from the List
+     
         public void SetTarget(Level level)
         {
-
+            //if its null we assign the level to it
             if (_level == null) _level = level;
 
+            //random target, max is the list length
             int nextTarget = _rnd.Next(0, level.Coordinates.Count);
 
-
+            //choose a point from the list
             var point = level.Coordinates[nextTarget];
 
             Ellipse target = new Ellipse();
             target.Width = 30;
             target.Height = 30;
-            target.Fill = Brushes.Black;
-            target.Stroke = Brushes.White;
+            target.Fill = Brushes.DarkBlue;
+            target.Stroke = Brushes.Black;
 
             target.MouseLeftButtonDown += Target_MouseLeftButtonDownSetNextTarget;
 
@@ -74,11 +75,11 @@ namespace SemesterProjekt
             
             tbl_accuracy.Text = _accuracy.ToString();
             
-
+            //add it to canvas
             Canvas.SetLeft(target, point.X - target.Width / 2);
             Canvas.SetTop(target, point.Y - target.Height / 2);
             canvas.Children.Add(target);
-
+            //sets the current target
             _currentTarget = target;
 
 
@@ -86,7 +87,7 @@ namespace SemesterProjekt
       
         public void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //if (!_Start) return;
+            
             if (!_isHit)
             {
                 _misses++;
@@ -110,7 +111,7 @@ namespace SemesterProjekt
                 _hitCount++;
             }
             
-            if (_timerCounter < _level.Coordinates.Count)
+            if (_hitCount < _level.Coordinates.Count)
             {
                 SetTarget(_level);
 

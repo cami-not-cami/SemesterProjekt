@@ -32,10 +32,6 @@ namespace SemesterProjekt
         public int _customTargetIndex = 0;
         internal DispatcherTimer timer;
         internal UIElement _currentTarget;
-        private bool _randomizePlacement = false;
-        
-
-
         private int _customTargetCounter = 0;
         public Target(Canvas canvas, Label lbl_timer, TextBlock tbl_hits, TextBlock tbl_misses, TextBlock tbl_accuracy, CheckBox checkbox)
         : base(canvas, lbl_timer, tbl_hits, tbl_misses, tbl_accuracy, checkbox)
@@ -48,7 +44,7 @@ namespace SemesterProjekt
         public void StartSpawningTargets()
         {
             if (!_Start) return;
-            //timer.Interval = TimeSpan.FromMilliseconds(200);
+         
             timer.Interval = TimeSpan.FromSeconds(0.8);
             timer.Tick -= Tick;
             timer.Tick += Tick;
@@ -75,8 +71,7 @@ namespace SemesterProjekt
             }
             else
             {
-                //timer.Stop();
-                
+                //after timer stops
                 AccuracyCalc();
             }
             _timerCounter++;
@@ -94,11 +89,11 @@ namespace SemesterProjekt
                 {
                     Width = double.IsRealNumber(SizeSlider) ? SizeSlider : 1,
                     Height = double.IsRealNumber(SizeSlider) ? SizeSlider : 1,
-                    Fill = Brushes.Green,
+                    Fill = Brushes.DarkBlue,
                     Stroke = Brushes.Black,
                     StrokeThickness = 1
                 };
-
+                //minimum is 5
                 if (targetPoints.Count < 5)
                 {
                     MessageBox.Show("You need at least 5 Targets");
@@ -109,14 +104,14 @@ namespace SemesterProjekt
 
                     return;
                 }
+                //chooses random coord from the list 
                  position = targetPoints[_random.Next(targetPoints.Count)];
-
+                //removes the last one before placing new
                 if (_currentTarget != null)
                 {
                     canvas.Children.Remove(_currentTarget);
                 }
                
-                target.MouseLeftButtonDown -= Target_MouseLeftButtonDown;
                 target.MouseLeftButtonDown += Target_MouseLeftButtonDown;
 
                 //if its not checked we do standard random size
@@ -152,17 +147,18 @@ namespace SemesterProjekt
             {
                 Width = double.IsRealNumber(SizeSlider) ? SizeSlider : 1,
                 Height = double.IsRealNumber(SizeSlider) ? SizeSlider : 1,
-                Fill = Brushes.Black,
+                Fill = Brushes.DarkBlue,
                 Stroke = Brushes.Black,
                 StrokeThickness = 1
             };
+            //checks for overlap in standard mode
             if (!Coordinates(target))
             {
                 target = null;
                 canvas.Children.Remove(target);
                 return;
             }
-            target.MouseLeftButtonDown -= Target_MouseLeftButtonDown;
+ 
             target.MouseLeftButtonDown += Target_MouseLeftButtonDown;
             canvas.Children.Add(target);
 
@@ -190,10 +186,12 @@ namespace SemesterProjekt
         }
         internal void Target_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            //casts target as Uielement 
             var target = sender as UIElement;
 
             if (target != null && canvas.Children.Contains(target))
             {
+                target.MouseLeftButtonDown -= Target_MouseLeftButtonDown;
                 _isHit = true;
                 canvas.Children.Remove(target);
                 _targetCount--;
@@ -203,7 +201,7 @@ namespace SemesterProjekt
 
         }
         /// <summary>
-        /// 
+        /// overlap check standard mode
         /// </summary>
         /// <param name="target"></param>
         /// <returns>Gibt an ob Koordinate im Deathloop haengt true alles ok false Deathloop</returns>
@@ -285,11 +283,10 @@ namespace SemesterProjekt
         }
         public void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (!_Start) return;
+            if (!_Start) return; //dont update boxes
             if (!_isHit)
             {
                 _misses++;
-
                 tbl_misses.Text = _misses.ToString();
             }
             _isHit = false;
@@ -313,7 +310,7 @@ namespace SemesterProjekt
             Canvas.SetLeft(previewTarget, clickedPoint.X - previewTarget.Width / 2);
             Canvas.SetTop(previewTarget, clickedPoint.Y - previewTarget.Height / 2);
           
-            //inverts
+            //inverts if its not true things overlap so we set it to null
             if (!CheckCustomCoordinates(clickedPoint))
             {
                 previewTarget = null;
@@ -364,7 +361,6 @@ namespace SemesterProjekt
             timer.Stop();
             _customTargetCounter = 0;
             
-
             timer.Tick -= Tick;
 
             canvas.Children.Clear();
@@ -383,8 +379,8 @@ namespace SemesterProjekt
         }
         public void sld_slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            //triggers event that gets the new value from the ui as the user interacts with it
-            //Dispatcher.InvokeAsync(() => SizeSlider = e.NewValue);
+            //e new value gets the value from when the user interacts with it, 80 is max
+            //math min takes the smaller one between the 2
             SizeSlider = Math.Min(e.NewValue, 80);
 
         }

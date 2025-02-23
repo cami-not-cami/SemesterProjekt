@@ -11,8 +11,8 @@
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Canvas Name ="canvas" Grid.Row="1" Background="#FF847B7B" ></Canvas>
-        <Grid x:Name="menubar" Background="#FFAF9E9E">
+        <Canvas Name ="canvas" Grid.Row="1" Background="#FF737373" ></Canvas>
+        <Grid x:Name="menubar" Background="#FFD8D2D2">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>

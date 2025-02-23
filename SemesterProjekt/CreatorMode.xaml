@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SemesterProjekt"
         mc:Ignorable="d"
-        Title="CreatorMode" Height="450" Width="800">
+        Title="CreatorMode" Height="450" Width="800"  WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" WindowState="Maximized">
     <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Canvas Name ="canvas" Grid.Row="1" Background="#FFCE9D9D" ></Canvas>
-        <Grid x:Name="menubar" Background="#FFAF9E9E">
+        <Canvas Name ="canvas" Grid.Row="1" Background="#FF737373" ></Canvas>
+        <Grid x:Name="menubar" Background="#FFD8D2D2">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -44,12 +44,12 @@
             <TextBlock x:Name="tbl_accuracy"  Grid.Column="2" Grid.Row="1" TextWrapping="Wrap" Padding="0,5,0,0" Grid.ColumnSpan="2" Margin="52,0,0,0"/>
             <TextBlock x:Name="tbl_misses" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Padding="0,5,0,0" Grid.ColumnSpan="2" Margin="0,0,52,0"/>
             <CheckBox x:Name="checkbox" Grid.Column="3" Content="Animation"  Grid.Row="1" Grid.ColumnSpan="4" VerticalContentAlignment="Center" FontSize="11" Margin="32,0,55,0" />
-            <Button x:Name="btn_load" Grid.Column="6" Content="load" Click="btn_load_Click" Background="#FFF1A8A8" Grid.ColumnSpan="2"/>
+            <Button x:Name="btn_load" Grid.Column="6" Content="load" Click="btn_load_Click" Background="#FFD8D8D8" Grid.ColumnSpan="2"/>
             <Label Grid.Column="3" Content="Background:" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.ColumnSpan="4" Margin="32,0,55,0"/>
             <Button x:Name="btn_start" Grid.Column="8" Content="Start" Grid.Row="1" />
             <Button x:Name="btn_reset" Grid.Column="8" Content="Reset"/>
-            <Slider x:Name="sld_slider" Grid.Column="6" Minimum="20" Maximum="60" Value="{Binding SizeSlider}" ValueChanged="sld_slider_ValueChanged" SmallChange="5" Grid.ColumnSpan="3" Grid.Row="1" Margin="1,0,48,0"/>
-            <Button x:Name="btn_mainMenu" Grid.Column="8" Content="Main Menu" FontSize="11" Click="btn_mainMenu_Click" Background="#FFD8D8D8" Grid.ColumnSpan="2" Margin="48,0,0,0"/>
+            <Slider x:Name="sld_slider" Grid.Column="10" Minimum="20" Maximum="60" Value="{Binding SizeSlider}" ValueChanged="sld_slider_ValueChanged" SmallChange="5" Grid.ColumnSpan="2" Grid.Row="1"/>
+            <Button x:Name="btn_mainMenu" Grid.Column="9" Content="Main Menu" FontSize="11" Click="btn_mainMenu_Click" Background="#FFD8D8D8"/>
            
 
 
