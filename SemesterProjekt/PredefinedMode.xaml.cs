@@ -17,6 +17,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
+using System.Diagnostics;
 
 namespace SemesterProjekt
 {
@@ -33,6 +34,7 @@ namespace SemesterProjekt
         public PredefinedMode()
         {
             InitializeComponent();
+            //Process.Start(AppDomain.CurrentDomain.BaseDirectory);
             PredefinedClass predefinedClass = new PredefinedClass(canvas,lbl_timer,tbl_hits,tbl_misses,tbl_accuracy,checkbox);
 
             this.Cursor = new Cursor(Application.GetResourceStream(new Uri("pack://application:,,,/Crosshair.cur")).Stream);
@@ -64,17 +66,15 @@ namespace SemesterProjekt
             if (openFileDialog.ShowDialog() == true)
             {
 
-
-               // string jsonFilePath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"/Resources/Images/dust2.png");
-                
-
                 _level = JsonLoader.ReadFromJsonFile<Level>(openFileDialog.FileName);
-                _level.BackgroundImage = "pack://application:,,,/Resources/Images/dust2.png";
                 
+                string use = Directory.GetCurrentDirectory() + _level.BackgroundImage ;
+                
+
                 if (_level != null)
                 {
                     ImageBrush imageBrush = new ImageBrush();
-                    imageBrush.ImageSource = new BitmapImage(new Uri(_level.BackgroundImage));
+                    imageBrush.ImageSource = new BitmapImage(new Uri(use));
                     imageBrush.Stretch = Stretch.UniformToFill;
 
                     canvas.Background = imageBrush;

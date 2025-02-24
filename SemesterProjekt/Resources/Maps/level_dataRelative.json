@@ -1,5 +1,5 @@
 {
-    "BackgroundImage": "../Images/dust2.png",
+    "BackgroundImage": "/Resources/Images/dust2.png",
     "Coordinates": [
         {
             "X": 1233,

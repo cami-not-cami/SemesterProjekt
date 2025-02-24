@@ -11,17 +11,25 @@
   <ItemGroup>
     <None Remove="Crosshair.cur" />
     <None Remove="Resources\Images\dust2.png" />
+    <None Remove="Resources\Images\mirage.png" />
     <None Remove="Resources\Maps\level_data.json" />
+    <None Remove="Resources\Maps\level_dataRelative.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Crosshair.cur" />
-    <Resource Include="Resources\Images\dust2.png">
+    <Content Include="Resources\Images\dust2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\mirage.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Maps\level_dataRelative.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Maps\level_data.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Maps\level_data.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
   </ItemGroup>
 
 </Project>
