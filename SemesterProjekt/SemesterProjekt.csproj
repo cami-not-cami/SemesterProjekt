@@ -10,10 +10,18 @@
 
   <ItemGroup>
     <None Remove="Crosshair.cur" />
+    <None Remove="Resources\Images\dust2.png" />
+    <None Remove="Resources\Maps\level_data.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Crosshair.cur" />
+    <Resource Include="Resources\Images\dust2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Maps\level_data.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

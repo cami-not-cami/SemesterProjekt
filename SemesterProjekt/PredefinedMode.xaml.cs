@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace SemesterProjekt
 {
@@ -63,8 +64,13 @@ namespace SemesterProjekt
             if (openFileDialog.ShowDialog() == true)
             {
 
-                _level = JsonLoader.ReadFromJsonFile<Level>(openFileDialog.FileName);
 
+               // string jsonFilePath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"/Resources/Images/dust2.png");
+                
+
+                _level = JsonLoader.ReadFromJsonFile<Level>(openFileDialog.FileName);
+                _level.BackgroundImage = "pack://application:,,,/Resources/Images/dust2.png";
+                
                 if (_level != null)
                 {
                     ImageBrush imageBrush = new ImageBrush();
@@ -72,6 +78,7 @@ namespace SemesterProjekt
                     imageBrush.Stretch = Stretch.UniformToFill;
 
                     canvas.Background = imageBrush;
+                    
 
                 }
             }
@@ -90,6 +97,6 @@ namespace SemesterProjekt
 
         }
 
-    
+
     }
 }

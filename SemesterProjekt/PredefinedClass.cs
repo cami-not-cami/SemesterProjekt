@@ -50,7 +50,10 @@ namespace SemesterProjekt
 
         }
 
-     
+     /// <summary>
+     /// 
+     /// </summary>
+     /// <param name="level"></param>
         public void SetTarget(Level level)
         {
             //if its null we assign the level to it

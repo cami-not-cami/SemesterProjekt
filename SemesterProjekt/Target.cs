@@ -39,12 +39,12 @@ namespace SemesterProjekt
             timer = new DispatcherTimer();
 
         }
-        
+
 
         public void StartSpawningTargets()
         {
             if (!_Start) return;
-         
+
             timer.Interval = TimeSpan.FromSeconds(0.8);
             timer.Tick -= Tick;
             timer.Tick += Tick;
@@ -59,10 +59,9 @@ namespace SemesterProjekt
                 canvas.IsEnabled = true;
                 if (_isCustomSet)
                 {
-
                     SetCustomTargets();
                 }
-                else 
+                else
                 {
                     SetTargets();
                 }
@@ -77,7 +76,7 @@ namespace SemesterProjekt
             _timerCounter++;
 
         }
-      
+
 
 
         internal void SetCustomTargets()
@@ -105,13 +104,13 @@ namespace SemesterProjekt
                     return;
                 }
                 //chooses random coord from the list 
-                 position = targetPoints[_random.Next(targetPoints.Count)];
+                position = targetPoints[_random.Next(targetPoints.Count)];
                 //removes the last one before placing new
                 if (_currentTarget != null)
                 {
                     canvas.Children.Remove(_currentTarget);
                 }
-               
+
                 target.MouseLeftButtonDown += Target_MouseLeftButtonDown;
 
                 //if its not checked we do standard random size
@@ -158,7 +157,7 @@ namespace SemesterProjekt
                 canvas.Children.Remove(target);
                 return;
             }
- 
+
             target.MouseLeftButtonDown += Target_MouseLeftButtonDown;
             canvas.Children.Add(target);
 
@@ -223,7 +222,7 @@ namespace SemesterProjekt
                     xCoord = _random.NextDouble() * (canvas.ActualWidth - target.Width);
                     yCoord = _random.NextDouble() * (canvas.ActualHeight - target.Height);
 
-                    //gets coordinates of rectangle since my targets are placed by top and left not point aka radius
+                    //gets coordinates of rectangle since my targets are placed by top and left not point
                     Rect targetRect = new Rect(xCoord, yCoord, target.Width, target.Height);
                     foreach (Ellipse tar in targetList)
                     {
@@ -283,7 +282,8 @@ namespace SemesterProjekt
         }
         public void Canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (!_Start) return; //dont update boxes
+            //dont update boxes
+            if (!_Start) return;
             if (!_isHit)
             {
                 _misses++;
@@ -309,7 +309,7 @@ namespace SemesterProjekt
 
             Canvas.SetLeft(previewTarget, clickedPoint.X - previewTarget.Width / 2);
             Canvas.SetTop(previewTarget, clickedPoint.Y - previewTarget.Height / 2);
-          
+
             //inverts if its not true things overlap so we set it to null
             if (!CheckCustomCoordinates(clickedPoint))
             {
@@ -346,7 +346,7 @@ namespace SemesterProjekt
             canvas.IsHitTestVisible = true;
             canvas.Children.Clear();
             _Start = true;
-            
+
             StartSpawningTargets();
         }
         public void btn_Reset_Click(object sender, RoutedEventArgs e)
@@ -360,7 +360,7 @@ namespace SemesterProjekt
             _timerCounter = 0;
             timer.Stop();
             _customTargetCounter = 0;
-            
+
             timer.Tick -= Tick;
 
             canvas.Children.Clear();
@@ -384,7 +384,7 @@ namespace SemesterProjekt
             SizeSlider = Math.Min(e.NewValue, 80);
 
         }
-     
+
     }
 
 }
